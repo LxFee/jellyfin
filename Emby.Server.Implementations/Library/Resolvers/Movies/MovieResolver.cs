@@ -225,7 +225,7 @@ namespace Emby.Server.Implementations.Library.Resolvers.Movies
 
             if (string.Equals(collectionType, CollectionType.TvShows, StringComparison.OrdinalIgnoreCase))
             {
-                return ResolveVideos<Episode>(parent, files, false, collectionType, true);
+                return ResolveVideos<Episode>(parent, files, true, collectionType, false);
             }
 
             return null;
@@ -271,7 +271,7 @@ namespace Emby.Server.Implementations.Library.Resolvers.Movies
                 .Where(f => f != null)
                 .ToList();
 
-            var resolverResult = VideoListResolver.Resolve(videoInfos, NamingOptions, supportMultiEditions, parseName);
+            var resolverResult = VideoListResolver.Resolve(videoInfos, NamingOptions, collectionType, supportMultiEditions, parseName);
 
             var result = new MultiItemResolverResult
             {
