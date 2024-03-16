@@ -100,17 +100,17 @@ namespace Emby.Notifications
         {
             note.Name = _localization.GetLocalizedString("NotificationOption" + note.Type);
 
-            note.IsBasedOnUserEvent = note.Type.IndexOf("Playback", StringComparison.OrdinalIgnoreCase) != -1;
+            note.IsBasedOnUserEvent = note.Type.Contains("Playback", StringComparison.OrdinalIgnoreCase);
 
-            if (note.Type.IndexOf("Playback", StringComparison.OrdinalIgnoreCase) != -1)
+            if (note.Type.Contains("Playback", StringComparison.OrdinalIgnoreCase))
             {
                 note.Category = _localization.GetLocalizedString("User");
             }
-            else if (note.Type.IndexOf("Plugin", StringComparison.OrdinalIgnoreCase) != -1)
+            else if (note.Type.Contains("Plugin", StringComparison.OrdinalIgnoreCase))
             {
                 note.Category = _localization.GetLocalizedString("Plugin");
             }
-            else if (note.Type.IndexOf("UserLockedOut", StringComparison.OrdinalIgnoreCase) != -1)
+            else if (note.Type.Contains("UserLockedOut", StringComparison.OrdinalIgnoreCase))
             {
                 note.Category = _localization.GetLocalizedString("User");
             }
