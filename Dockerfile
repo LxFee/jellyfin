@@ -4,14 +4,14 @@
 # https://github.com/multiarch/qemu-user-static#binfmt_misc-register
 ARG DOTNET_VERSION=6.0
 
-FROM node:lts-alpine as web-builder
-ARG JELLYFIN_WEB_VERSION=master
-RUN apk add curl git zlib zlib-dev autoconf g++ make libpng-dev gifsicle alpine-sdk automake libtool make gcc musl-dev nasm python3 \
- && curl -L https://github.com/jellyfin/jellyfin-web/archive/${JELLYFIN_WEB_VERSION}.tar.gz | tar zxf - \
- && cd jellyfin-web-* \
- && npm ci --no-audit --unsafe-perm \
- && npm run build:production \
- && mv dist /dist
+# FROM node:lts-alpine as web-builder
+# ARG JELLYFIN_WEB_VERSION=master
+# RUN apk add curl git zlib zlib-dev autoconf g++ make libpng-dev gifsicle alpine-sdk automake libtool make gcc musl-dev nasm python3 \
+#  && curl -L https://github.com/jellyfin/jellyfin-web/archive/${JELLYFIN_WEB_VERSION}.tar.gz | tar zxf - \
+#  && cd jellyfin-web-* \
+#  && npm ci --no-audit --unsafe-perm \
+#  && npm run build:production \
+#  && mv dist /dist
 
 FROM debian:stable-slim as app
 
@@ -80,7 +80,7 @@ FROM app
 ENV HEALTHCHECK_URL=http://localhost:8096/health
 
 COPY --from=builder /jellyfin /jellyfin
-COPY --from=web-builder /dist /jellyfin/jellyfin-web
+COPY dist /jellyfin/jellyfin-web
 
 EXPOSE 8096
 VOLUME /cache /config

@@ -266,7 +266,7 @@ ci/
 doc/
 
 # Deployment artifacts
-dist
+# dist
 *.exe
 *.dll
 
